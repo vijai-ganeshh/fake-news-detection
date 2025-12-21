@@ -1,0 +1,31 @@
+{
+  "prediction": "FAKE",
+  "probability": 0.7340391874313354,
+  "explainability": {
+    "full_prediction": [
+      [
+        0.7340391874313354
+      ]
+    ],
+    "no_text_prediction": [
+      [
+        0.49113479256629944
+      ]
+    ],
+    "no_user_prediction": [
+      [
+        0.7195109128952026
+      ]
+    ],
+    "text_contribution": [
+      [
+        0.242904394865036
+      ]
+    ],
+    "user_contribution": [
+      [
+        0.014528274536132812
+      ]
+    ]
+  }
+}

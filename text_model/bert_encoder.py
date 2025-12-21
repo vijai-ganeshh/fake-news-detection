@@ -1,14 +1,23 @@
-# text_model/bert_encoder.py
+import tensorflow as tf
+from transformers import AutoTokenizer, TFAutoModel
 
-from transformers import TFAutoModel
-from .config import MODEL_NAME
+MODEL_NAME = "bert-base-uncased"
 
-def load_bert():
-    model = TFAutoModel.from_pretrained(MODEL_NAME)
-    model.trainable = False   # 🔒 freeze BERT
-    return model
+tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
 
 def get_text_embeddings(encoded_inputs):
-    model = load_bert()
-    outputs = model(encoded_inputs)
-    return outputs.last_hidden_state[:, 0, :]
+    """
+    Returns CLS embeddings from BERT (TensorFlow-native)
+    """
+    model = TFAutoModel.from_pretrained(
+        MODEL_NAME,
+        from_pt=False,        # force TensorFlow weights
+        use_safetensors=False
+    )
+
+    outputs = model(encoded_inputs, training=False)
+
+    # CLS token embedding
+    cls_embeddings = outputs.last_hidden_state[:, 0, :]
+
+    return cls_embeddings
