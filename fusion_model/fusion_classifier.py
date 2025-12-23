@@ -1,35 +1,16 @@
-# fusion_model/fusion_classifier.py
+import torch
+import torch.nn as nn
 
-import tensorflow as tf
-from tensorflow.keras import layers, models
+class FusionClassifier(nn.Module):
+    def __init__(self, input_dim=896):  # 768 + 128
+        super().__init__()
 
-def build_fusion_model(
-    text_dim=768,
-    user_dim=64,
-    hidden_dim=128
-):
-    """
-    Builds a fusion model that combines text and user embeddings
-    and predicts fake / real news.
-    """
+        self.classifier = nn.Sequential(
+            nn.Linear(input_dim, 256),
+            nn.ReLU(),
+            nn.Linear(256, 1),
+            nn.Sigmoid()
+        )
 
-    # Input layers
-    text_input = layers.Input(shape=(text_dim,), name="text_embedding")
-    user_input = layers.Input(shape=(user_dim,), name="user_embedding")
-
-    # Combine embeddings
-    fused_features = layers.Concatenate()([text_input, user_input])
-
-    # Fusion layers
-    x = layers.Dense(hidden_dim, activation="relu")(fused_features)
-    x = layers.Dense(hidden_dim // 2, activation="relu")(x)
-
-    # Output layer
-    output = layers.Dense(1, activation="sigmoid")(x)
-
-    model = models.Model(
-        inputs=[text_input, user_input],
-        outputs=output
-    )
-
-    return model
+    def forward(self, x):
+        return self.classifier(x)
