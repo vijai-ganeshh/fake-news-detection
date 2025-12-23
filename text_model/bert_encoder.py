@@ -1,23 +1,29 @@
 import tensorflow as tf
-from transformers import AutoTokenizer, TFAutoModel
+from transformers import BertTokenizer, TFBertModel
 
-MODEL_NAME = "bert-base-uncased"
 
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+# Load tokenizer and model ONCE (important for performance)
+tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+model = TFBertModel.from_pretrained("bert-base-uncased")
 
-def get_text_embeddings(encoded_inputs):
+
+def get_text_embeddings(texts):
     """
-    Returns CLS embeddings from BERT (TensorFlow-native)
+    Convert a list of texts into BERT embeddings (768-dim)
+    Returns NumPy array of shape (batch_size, 768)
     """
-    model = TFAutoModel.from_pretrained(
-        MODEL_NAME,
-        from_pt=False,        # force TensorFlow weights
-        use_safetensors=False
+
+    inputs = tokenizer(
+        texts,
+        padding=True,
+        truncation=True,
+        max_length=512,
+        return_tensors="tf"
     )
 
-    outputs = model(encoded_inputs, training=False)
+    outputs = model(**inputs)
 
-    # CLS token embedding
+    # Use [CLS] token embedding
     cls_embeddings = outputs.last_hidden_state[:, 0, :]
 
-    return cls_embeddings
+    return cls_embeddings.numpy()
