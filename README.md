@@ -136,3 +136,16 @@ No dependency conflicts ❌
 Any user can run this project using only Docker, without manually installing ML libraries.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+🔮 Future Enhancements
+
+🌍 Real-world graph construction from social media data
+
+📰 Source credibility modeling
+
+🌐 Multilingual fake news detection
+
+☁️ Cloud deployment
+
+🎨 Frontend web interface
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
