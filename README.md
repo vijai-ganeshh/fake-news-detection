@@ -3,6 +3,11 @@
 > Hybrid Deep Learning System using BERT + GNN for Misinformation Detection
 
 ## Overview
+## 🎥 Live Demo
+
+Watch the live demo of the **Fake News Detection Project** here:
+
+[▶️ View Demo Video](https://drive.google.com/file/d/16N_dVsYQ9fGbiqSd8LCZzyH0KoyfvmM9/view?usp=sharing)
 
 A hybrid deep learning system for fake news detection that combines:
 
